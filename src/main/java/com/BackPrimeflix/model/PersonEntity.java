@@ -9,11 +9,12 @@ import java.io.Serializable;
 public abstract class PersonEntity implements Serializable {
     //members
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //generate the primary key automatically
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToOne(mappedBy = "personEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="address_id")
     private AddressEntity addressEntity;
 
     //getter and setter

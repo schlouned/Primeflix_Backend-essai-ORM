@@ -14,9 +14,6 @@ public class AddressEntity implements Serializable {
     private String zipCode;
     private String city;
     private String countryCode;
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name = "person_entity_id")
-    private PersonEntity personEntity;
 
     //constructor
     public AddressEntity() {
@@ -71,20 +68,11 @@ public class AddressEntity implements Serializable {
         this.countryCode = countryCode;
     }
 
-    public PersonEntity getPersonEntity() {
-        return personEntity;
-    }
-
-    public void setPersonEntity(PersonEntity personEntity) {
-        this.personEntity = personEntity;
-    }
-
     //to string
 
     @Override
     public String toString() {
         return "AddressEntity{" +
-                "personEntity=" + personEntity +
                 ",id=" + id +
                 ", street='" + street + '\'' +
                 ", number=" + houseNumber +

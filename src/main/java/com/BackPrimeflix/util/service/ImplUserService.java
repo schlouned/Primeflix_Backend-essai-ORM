@@ -54,11 +54,12 @@ public class ImplUserService implements UserService {
         //set an address
         //warning not forget to create an empty address
         AddressEntity address = new AddressEntity();
-        address.setPersonEntity(userEntity);
+        //address.setPersonEntity(userEntity);
         userEntity.setAddressEntity(address);
-        address.setPersonEntity(userEntity);
+        //address.setPersonEntity(userEntity);
         //persist in DB
         addressService.save(address);
+        userRepository.save(userEntity);
 
         // if registration mode is email => send an email
         if (registrationMode.equals("email")) {
@@ -275,10 +276,11 @@ public class ImplUserService implements UserService {
             //recover the address
             AddressEntity addressEntity = userEntity.getAddressEntity();
 
-            addressEntity.setPersonEntity(userEntity);
+            //addressEntity.setPersonEntity(userEntity);
             userEntity.setAddressEntity(addressEntity);
-            addressEntity.setPersonEntity(userEntity);
+            //addressEntity.setPersonEntity(userEntity);
             addressService.save(addressEntity);
+            userRepository.save(userEntity);
 
             return userEntity;
         }
