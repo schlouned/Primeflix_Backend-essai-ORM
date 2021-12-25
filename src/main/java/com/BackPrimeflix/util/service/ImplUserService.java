@@ -40,6 +40,8 @@ public class ImplUserService implements UserService {
     CartService cartService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    CartRepository cartRepository;
 
     //recover a value from the application.properties file => put in baseUrl
     @Value("${site.base.url.https}")
@@ -55,11 +57,13 @@ public class ImplUserService implements UserService {
         //warning not forget to create an empty address
         AddressEntity address = new AddressEntity();
         address.setPersonEntity(userEntity);
-        userEntity.setAddressEntity(address);
-        address.setPersonEntity(userEntity);
-        //persist in DB
-        addressService.save(address);
+        //address = addressService.save(address);
 
+        userEntity.setAddressEntity(address);
+        //address.setPersonEntity(userEntity);
+        //persist in DB
+
+        userRepository.save(userEntity);
         // if registration mode is email => send an email
         if (registrationMode.equals("email")) {
             sendRegistrationConfirmationEmail(userEntity);
@@ -290,7 +294,14 @@ public class ImplUserService implements UserService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        UserEntity userToDelete = userRepository.getById(id);
+        //cart
+        List<CartEntity> carts = userToDelete.getCarts();
+        for(CartEntity cart: carts) {
+            cartRepository.delete(cart);
+        }
+
+        userRepository.delete(userToDelete);
     }
 
 

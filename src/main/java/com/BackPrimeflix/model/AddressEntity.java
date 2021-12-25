@@ -14,7 +14,7 @@ public class AddressEntity implements Serializable {
     private String zipCode;
     private String city;
     private String countryCode;
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "person_entity_id")
     private PersonEntity personEntity;
 

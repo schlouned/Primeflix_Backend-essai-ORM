@@ -118,6 +118,7 @@ public class UserController {
             UserDto userDto = mapper.readValue(json, UserDto.class);
             String id = userDto.getId();
             //delete user
+
             userService.deleteUser(Long.parseLong(id));
         }
         //if error

@@ -1,5 +1,8 @@
 package com.BackPrimeflix.model;
 
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,7 +16,11 @@ public abstract class PersonEntity implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToOne(mappedBy = "personEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(mappedBy = "personEntity",
+            cascade=CascadeType.ALL,
+            orphanRemoval = true,
+            fetch=FetchType.LAZY)
+    @LazyToOne( LazyToOneOption.NO_PROXY )
     private AddressEntity addressEntity;
 
     //getter and setter
